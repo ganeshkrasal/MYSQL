@@ -1,0 +1,394 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> ### Show DataBase.., ###
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo1              |
+| information_schema |
+| ipl                |
+| mydata             |
+| mydata123          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (2.94 sec)
+
+mysql> ### Database Creation.., ###
+
+mysql> create database college;
+Query OK, 1 row affected (2.21 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| demo1              |
+| information_schema |
+| ipl                |
+| mydata             |
+| mydata123          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> ### Create TABLEs in DataBase..,
+
+mysql> ### Creating a database does not select it for use; you must do that explicitly..,
+mysql> ### Your database needs to be created only once, but you must select it for use each time you begin a mysql session.
+       ### You can do this by issuing a USE statement as shown in the example:
+mysql> use college;
+Database changed
+mysql> show tables;
+Empty set (4.12 sec)
+
+mysql> CREATE TABLE BachlorOfArts
+    -> (
+    -> Sr_No int unsigned NOT NULL auto_increment,
+    -> Subject_Name VARCHAR(50) NOT NULL,
+    -> Sub_Chapters VARCHAR(50) NOT NULL,
+    -> Hours int unsigned NOT NULL,
+    -> Total_Marks int unsigned NOT NULL,
+    -> Marks_Obtianed int unsigned NOT NULL,
+    -> PRIMARY KEY (Sr_No)
+    -> );
+Query OK, 0 rows affected (2.62 sec)
+
+### Once you have created a table, SHOW TABLES should produce some output:
+
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| bachlorofarts     |
++-------------------+
+1 row in set (0.04 sec)
+
+### To verify that your table was created the way you expected, use a DESCRIBE statement:
+mysql> DESCRIBE bachlorofarts;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| Sr_No          | int unsigned | NO   | PRI | NULL    | auto_increment |
+| Subject_Name   | varchar(50)  | NO   |     | NULL    |                |
+| Sub_Chapters   | varchar(50)  | NO   |     | NULL    |                |
+| Hours          | int unsigned | NO   |     | NULL    |                |
+| Total_Marks    | int unsigned | NO   |     | NULL    |                |
+| Marks_Obtianed | int unsigned | NO   |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.21 sec)
+
+mysql> ### Loading Data Into TABLEs Created..,
+
+mysql> INSERT INTO bachlorofarts (Subject_Name, Sub_Chapters, Hours, Total_Marks, Marks_Obtianed)
+    -> VALUES ("Marathi","32", "80", "100", "54"),
+    -> ("Hindi","32", "80", "100", "64"),
+    -> ("English", "32", "80", "100", "35"),
+    -> ("Sanskrit", "32", "100", "100", "98"),
+    -> ("Geography", "20", "120", "100", "78"),
+    -> ("Hostory", "20", "130", "100", "84");
+
+mysql> ### Select the Data from created table..,
+mysql> SELECT * FROM bachlorofarts;
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     1 | Marathi      | 32           |    80 |         100 |             54 |
+|     2 | Hindi        | 32           |    80 |         100 |             64 |
+|     3 | English      | 32           |    80 |         100 |             35 |
+|     4 | Sanskrit     | 32           |   100 |         100 |             98 |
+|     5 | Geography    | 20           |   120 |         100 |             78 |
+|     6 | Hostory      | 20           |   130 |         100 |             84 |
++-------+--------------+--------------+-------+-------------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> ### UPDATE the created TABLE content..,
+
+mysql>  UPDATE bachlorofarts SET Subject_Name = "SocialSci." WHERE Sr_No = 4;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM bachlorofarts;
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     1 | Marathi      | 32           |    80 |         100 |             54 |
+|     2 | Hindi        | 32           |    80 |         100 |             64 |
+|     3 | English      | 32           |    80 |         100 |             35 |
+|     4 | SocialSci.   | 32           |   100 |         100 |             98 |
+|     5 | Geography    | 20           |   120 |         100 |             78 |
+|     6 | Hostory      | 20           |   130 |         100 |             84 |
++-------+--------------+--------------+-------+-------------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> ### SELECT Specific Content from created TABLE..,
+
+mysql> SELECT * FROM bachlorofarts WHERE Subject_Name = 'Geography';
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     5 | Geography    | 20           |   120 |         100 |             78 |
++-------+--------------+--------------+-------+-------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> ### DELETE Specific Content from created TABLE..,
+
+mysql> DELETE FROM bachlorofarts WHERE Sr_No = '6';
+Query OK, 1 row affected (0.18 sec)
+
+mysql> SELECT * FROM bachlorofarts;
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     1 | Marathi      | 32           |    80 |         100 |             54 |
+|     2 | Hindi        | 32           |    80 |         100 |             64 |
+|     3 | English      | 32           |    80 |         100 |             35 |
+|     4 | SocialSci.   | 32           |   100 |         100 |             98 |
+|     5 | Geography    | 20           |   120 |         100 |             78 |
++-------+--------------+--------------+-------+-------------+----------------+
+5 rows in set (0.02 sec)
+
+mysql> ### Add TABLES to existing Database..,
+
+mysql> use college;
+Database changed
+
+mysql> CREATE TABLE BCom
+    -> (
+    -> Sr_No int unsigned NOT NULL auto_increment,
+    -> Subject_Name VARCHAR(50) NOT NULL,
+    -> Sub_Chapters VARCHAR(50) NOT NULL,
+    -> Hours int unsigned NOT NULL,
+    -> Total_Marks int unsigned NOT NULL,
+    -> Marks_Obtianed int unsigned NOT NULL,
+    -> PRIMARY KEY (Sr_No)
+    -> );
+Query OK, 0 rows affected (1.41 sec)
+
+mysql> SHOW tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| bachlorofarts     |
+| bcom              |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO bcom (Subject_Name, Sub_Chapters, Hours, Total_Marks, Marks_Obtianed)
+    -> VALUES ("Accounts","32", "80", "100", "94"),
+    -> ("Taxation","32", "80", "100", "94"),
+    -> ("Financial_Systems","32", "80", "100", "85"),
+    -> ("Business_Economics","32", "110", "100", "68"),
+    -> ("Company_Law","32", "110", "100", "75");
+Query OK, 5 rows affected (0.15 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bcom;
++-------+--------------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name       | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------------+--------------+-------+-------------+----------------+
+|     1 | Accounts           | 32           |    80 |         100 |             94 |
+|     2 | Taxation           | 32           |    80 |         100 |             94 |
+|     3 | Financial_Systems  | 32           |    80 |         100 |             85 |
+|     4 | Business_Economics | 32           |   110 |         100 |             68 |
+|     5 | Company_Law        | 32           |   110 |         100 |             75 |
++-------+--------------------+--------------+-------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO bsc (Subject_Name, Sub_Chapters, Hours, Total_Marks, Marks_Obtianed)
+    -> VALUES ("Physics","32", "120", "100", "98"),
+    -> ("Chemistry","32", "110", "100", "95"),
+    -> ("Maths","32", "110", "100", "100"),
+    -> ("Stats","32", "110", "100", "100"),
+    -> ("Electronics","32", "110", "100", "93");
+Query OK, 5 rows affected (0.24 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 |
+|     3 | Maths        | 32           |   110 |         100 |            100 |
+|     4 | Stats        | 32           |   110 |         100 |            100 |
+|     5 | Electronics  | 32           |   110 |         100 |             93 |
++-------+--------------+--------------+-------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| bachlorofarts     |
+| bcom              |
+| bsc               |
++-------------------+
+3 rows in set (0.06 sec)
+
+mysql> ### TABLE Atlerations..,
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed |
++-------+--------------+--------------+-------+-------------+----------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 |
+|     3 | Maths        | 32           |   110 |         100 |            100 |
+|     4 | Stats        | 32           |   110 |         100 |            100 |
+|     5 | Electronics  | 32           |   110 |         100 |             93 |
++-------+--------------+--------------+-------+-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> ### Addition of Column..,
+
+mysql> ALTER TABLE bsc
+    -> ADD Teacher_Name varchar(50);
+Query OK, 0 rows affected (0.74 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed | Teacher_Name |
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 | NULL         |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 | NULL         |
+|     3 | Maths        | 32           |   110 |         100 |            100 | NULL         |
+|     4 | Stats        | 32           |   110 |         100 |            100 | NULL         |
+|     5 | Electronics  | 32           |   110 |         100 |             93 | NULL         |
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+5 rows in set (0.04 sec)
+
+mysql> ALTER TABLE bsc
+    -> ADD New_Col01 varchar(50)
+    -> AFTER Teacher_Name;
+Query OK, 0 rows affected (0.58 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+--------------+-----------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed | Teacher_Name | New_Col01 |
++-------+--------------+--------------+-------+-------------+----------------+--------------+-----------+
+|     1 | Physics      | 32           |   120 |         100 |             98 | NULL         | NULL      |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 | NULL         | NULL      |
+|     3 | Maths        | 32           |   110 |         100 |            100 | NULL         | NULL      |
+|     4 | Stats        | 32           |   110 |         100 |            100 | NULL         | NULL      |
+|     5 | Electronics  | 32           |   110 |         100 |             93 | NULL         | NULL      |
++-------+--------------+--------------+-------+-------------+----------------+--------------+-----------+
+5 rows in set (0.04 sec)
+
+mysql> ALTER TABLE bsc
+    -> ADD New_Col02 varchar(50)
+    -> AFTER Total_Marks;
+Query OK, 0 rows affected (1.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+-----------+----------------+--------------+-----------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | New_Col02 | Marks_Obtianed | Teacher_Name | New_Col01 |
++-------+--------------+--------------+-------+-------------+-----------+----------------+--------------+-----------+
+|     1 | Physics      | 32           |   120 |         100 | NULL      |             98 | NULL         | NULL      |
+|     2 | Chemistry    | 32           |   110 |         100 | NULL      |             95 | NULL         | NULL      |
+|     3 | Maths        | 32           |   110 |         100 | NULL      |            100 | NULL         | NULL      |
+|     4 | Stats        | 32           |   110 |         100 | NULL      |            100 | NULL         | NULL      |
+|     5 | Electronics  | 32           |   110 |         100 | NULL      |             93 | NULL         | NULL      |
++-------+--------------+--------------+-------+-------------+-----------+----------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> ### Delete Column..,
+
+mysql> ALTER TABLE bsc
+    -> DROP COLUMN New_Col01;
+Query OK, 0 rows affected (0.73 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE bsc
+    -> DROP COLUMN New_Col02;
+Query OK, 0 rows affected (1.96 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed | Teacher_Name |
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 | NULL         |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 | NULL         |
+|     3 | Maths        | 32           |   110 |         100 |            100 | NULL         |
+|     4 | Stats        | 32           |   110 |         100 |            100 | NULL         |
+|     5 | Electronics  | 32           |   110 |         100 |             93 | NULL         |
++-------+--------------+--------------+-------+-------------+----------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> ### Column Rename..,
+
+mysql> ALTER TABLE bsc
+    -> CHANGE COLUMN Teacher_Name Sub_Teacher
+    -> VARCHAR(50);
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELCT * FROM bsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELCT * FROM bsc' at line 1
+mysql> SELECT * FROM bsc;
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed | Sub_Teacher |
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 | NULL        |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 | NULL        |
+|     3 | Maths        | 32           |   110 |         100 |            100 | NULL        |
+|     4 | Stats        | 32           |   110 |         100 |            100 | NULL        |
+|     5 | Electronics  | 32           |   110 |         100 |             93 | NULL        |
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> ### TABLE Rename..,
+
+mysql> ALTER TABLE bsc RENAME TO bachlorofsci;
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> SELECT * FROM bsc;
+ERROR 1146 (42S02): Table 'college.bsc' doesn't exist
+mysql> SELECT * FROM bachlorofsci;
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+| Sr_No | Subject_Name | Sub_Chapters | Hours | Total_Marks | Marks_Obtianed | Sub_Teacher |
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+|     1 | Physics      | 32           |   120 |         100 |             98 | NULL        |
+|     2 | Chemistry    | 32           |   110 |         100 |             95 | NULL        |
+|     3 | Maths        | 32           |   110 |         100 |            100 | NULL        |
+|     4 | Stats        | 32           |   110 |         100 |            100 | NULL        |
+|     5 | Electronics  | 32           |   110 |         100 |             93 | NULL        |
++-------+--------------+--------------+-------+-------------+----------------+-------------+
+5 rows in set (0.04 sec)
+
+mysql> SHOW tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| bachlorofarts     |
+| bachlorofsci      |
+| bcom              |
++-------------------+
+3 rows in set (0.03 sec)
+
+mysql>
